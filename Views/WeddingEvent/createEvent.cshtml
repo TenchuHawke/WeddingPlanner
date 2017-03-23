@@ -1,0 +1,29 @@
+@{ ViewData["Title"] = "Create Event"; }
+<h2>Welcome, @ViewBag.User.Name</h2> <a href="Dashboard">Home</a> / <a "Logout">Logout</a>
+<h2>Create Wedding Event</h2>
+<div class="row">
+    <div class="five columns error @(@ViewBag.Errors.Count > 0 ? " framed " : " ")"> @{ foreach(string error in ViewBag.Errors) {
+        <li>
+            <i>@error</i>
+        </li>
+        } }
+        </ul>
+    </div>
+</div>
+<form action="AddEvent" method="post"><br>
+    <label for="EventName">Name of the event</label>
+    <input type="text" name="EventName"><br>
+    <label for="EventDate">Event Date and Time:</label>
+    <input type="date" name="EventDate"><br>
+    <input type="hidden" name="OwnerId" value="@ViewBag.User.UserId">
+    <label for="SideA">First Participant</label>
+    <input type="text" name="SideA"><br>
+    <label for="SideATitle">First Participant's Title?</label>
+    <input type="text" name="SideATitle" placeholder="Bride"><br>
+    <label for="SideA">Second Participant</label>
+    <input type="text" name="SideB"><br>
+    <label for="SideATitle">Second Participant's Title?</label>
+    <input type="text" name="SideBTitle" placeholder="Groom"><br>
+    <button type="submit" class="btn-success">Create Event</button>
+
+</form>

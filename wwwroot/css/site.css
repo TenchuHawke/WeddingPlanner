@@ -1,0 +1,6 @@
+/*Write all of your CSS here*/
+.framed{
+    border: 5px solid blue;
+    border-radius: 5px;
+    padding: 0px 10px 20px 10px;
+}

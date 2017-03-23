@@ -1,0 +1,61 @@
+@{ ViewData["Title"] = "Dashboard"; }
+@using System.Linq;
+<h2>Welcome, @ViewBag.User.Name</h2>
+<div><a href="Dashboard">Home</a> / <a href="Logout">Logout</a>
+</div>
+        <hr style="border: 2px solid darkgreen">
+<table class="col-lg-10">
+    <tr>
+        <th>
+            Wedding
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Guests
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+    @{ foreach(var wedding in ViewBag.AllWeddings) {
+        <tr>
+    <td>
+        <a href="ViewEvent/@wedding.WeddingId"> @wedding.EventName</a></td>
+    <td>@wedding.EventDate.ToString("MMM dd, yyyy")</td>
+    <td>@wedding.RSVPCount()</td>
+    <td>@{int matches =0 ; foreach(var match in ViewBag.User.GuestAtWeddings){
+        if(match.EventId==wedding.WeddingId){matches++;}}
+        <p>
+        </p>
+        @if(matches>0){ <p><a href="RemoveRSVP/@wedding.WeddingId"> RemoveRSVP</a></p> ;}
+         else{
+             <form action="AddRSVP" method="post">
+            <input type="hidden" name="id" value="@wedding.WeddingId">
+            <input type="hidden" name="side" value = "true">
+            <input type="submit" class="btn-info" value="RSVP for @wedding.SideATitle">
+        </form> 
+             <form action="AddRSVP" method="post">
+            <input type="hidden" name="id" value="@wedding.WeddingId">
+            <input type="hidden" name="side" value = "false">
+            <input type="submit" class="btn-info" value="RSVP for @wedding.SideBTitle">
+        </form> }}
+    </td>
+    <tr><td colspan="4">
+
+        <hr style="border: 1px solid darkgreen">
+    </td>
+    </tr>
+    </tr>
+    } }
+</table>
+@{
+if(ViewBag.User.Registered){
+
+<div class="col-lg-3 framed text-center"><br>
+    <h4><a href="AddEvent">Create a New Wedding</a></h4>
+</div>
+}
+}

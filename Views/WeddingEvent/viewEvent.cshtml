@@ -1,0 +1,93 @@
+@{ ViewData["Title"] = "View Event"; }
+<h2>Welcome, @ViewBag.User.Name</h2> <a href="/Dashboard">Home</a> / <a href="/Logout">Logout</a>
+<table>
+    <tr>
+        <td colspan="4">
+            <h2>@ViewBag.Event.EventName</h2>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <p>
+                Date:
+            </p>
+        </td>
+        <td>
+            <p>
+                @ViewBag.Event.EventDate.ToString("MMM dd, yyyy")
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="2">
+            Number of Confirmed Guests: @ViewBag.Event.RSVPCount() @{if(ViewBag.Event.OwnerId==ViewBag.User.UserId){
+            <p> pending: @ViewBag.Pending</p>}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <h3>Guests that have RSVPed.</h3>
+            <hr>
+        </td>
+    </tr>
+</table>
+<div class="container">
+    <div class="col-lg-offset-2 col-lg-4">
+        <ul>
+            @{ foreach(var guest in ViewBag.Event.GuestsAttending){
+                @if(((!guest.Pending) ||(guest.Guest.UserId==ViewBag.user.UserId))&& (guest.GuestOfSideA)){
+            <li>
+                    <text>@guest.Guest.Name</text>;
+                    @if(guest.Pending){
+                        <i>pending</i>
+                    }
+            </li>
+                    }
+            } }
+        </ul>
+        <ul>
+            @{ foreach(var guest in ViewBag.Event.GuestsAttending){
+                @if((guest.Pending)&&(guest.GuestOfSideA)&&(ViewBag.Event.OwnerId == ViewBag.User.UserId)){
+            <li>
+                    <text>@guest.Guest.Name</text>
+                <form action="/ConfirmRSVP" method="post">
+                    <input type="hidden" name="GuestId" value="@guest.Guest.UserId">
+                    <input type="hidden" name="EventId" value="@ViewBag.Event.WeddingId">
+                    <button type="submit">Confirm RSVP</button>
+                </form>
+            </li>
+                }
+            } }
+        </ul>
+    </div>
+    <div class="col-lg-offset-2 col-lg-4">
+        <ul>
+            @{ foreach(var guest in ViewBag.Event.GuestsAttending){
+                @if(((!guest.Pending)||(guest.Guest.UserId==ViewBag.User.UserId))&&(!guest.GuestOfSideA)){
+            <li>
+                    <text>@guest.Guest.Name</text>
+                                        @if(guest.Pending){
+                        <i>pending</i>
+                    }
+            </li>
+                    }
+            } }
+        </ul>
+        <ul>
+            @{ foreach(var guest in ViewBag.Event.GuestsAttending){
+                @if((guest.Pending)&&(!guest.GuestOfSideA)&&(ViewBag.Event.Owner.UserId == ViewBag.User.UserId)){
+            <li>
+                    <text>@guest.Guest.Name</text>
+                <form action="/ConfirmRSVP" method="post">
+                    <input type="hidden" name="GuestId" value="@guest.Guest.UserId">
+                    <input type="hidden" name="EventId" value="@ViewBag.Event.WeddingId">
+                    <button type="submit">Confirm RSVP</button>
+                </form>
+            </li>
+                }
+            } }
+        </ul>
+    </div>
+</div>

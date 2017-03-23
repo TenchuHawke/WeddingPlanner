@@ -1,0 +1,45 @@
+@{ ViewData["Title"] = "Login / Registration Page"; }
+<div class="container">
+    <div class="row">
+        <div class="five columns error @(@ViewBag.Errors.Count > 0 ? " framed " : " ")"> @{ foreach(string error in ViewBag.Errors) {
+            <li>
+                <i>@error</i>
+            </li>
+            } }
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="nine columns framed">
+            <p>New Users</p>
+            <h5>Register</h5>
+            <div class="row">
+
+                <div class="six columns">
+
+                    <form action="Register" method="POST">
+                        <input type="hidden" name="Name" value="@ViewBag.User.Name">
+                        <label for="Email">E-Mail Address</label>
+                        <input type="email" class="u-full-width" name="Email" placeholder="E-Mail">
+
+                        <label for="FirstName">First Name</label>
+                        <input type="text" class="u-full-width" placeholder="First Name" name="FirstName">
+
+                        <label for="LastName">Last Name</label>
+                        <input type="text" class="u-full-width" placeholder="Last Name" name="LastName">
+                        <button type="submit" class="button-primary">Register</button>
+
+                </div>
+                <div class="six columns">
+
+                    <label for="Password">Password</label>
+                    <input type="password" name="Password" class="u-full-width" placeholder="Password" value="Password1234">
+
+                    <label for="PasswordConfirm">Confirm Password</label>
+                    <input type="password" name="PasswordConfirm" class="u-full-width" placeholder=" Confirm Password" value="Password1234">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

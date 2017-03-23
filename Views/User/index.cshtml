@@ -1,0 +1,17 @@
+@{ ViewData["Title"] = "Enter Name"; }
+
+<h1>Welcome to the Wedding Planner RSVP page</h1>
+    <div class="row">
+        <div class="five columns error @(@ViewBag.Errors.Count > 0 ? " framed " : " ")"> @{ foreach(string error in ViewBag.Errors) {
+            <li>
+                <i>@error</i>
+            </li>
+            } }
+            </ul>
+        </div>
+<p>Please enter your Name</p>
+<form action="Landing" method="post">
+    <label for="Username">Name:</label>
+    <input type="text" name="Username" placeholder="Name, please.">
+    <button type="submit" class="btn-default"> Enter the Site</button>
+</form>

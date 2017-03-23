@@ -1,0 +1,33 @@
+@{ ViewData["Title"] = "Login / Registration Page"; }
+<div class="container">
+    <div class="row">
+        <div class="five columns error @(@ViewBag.Errors.Count > 0 ? " framed " : " ")"> @{ foreach(string error in ViewBag.Errors) {
+            <li>
+                <i>@error</i>
+            </li>
+            } }
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="three columns framed">
+            <p>
+                <h3>Create account or continue as Guest</h3>
+            </p>
+            <p>Guests cannot Create or Modify Events</p>
+            <h3>
+                <p>Welcome @ViewBag.User.Name</p>
+            </h3>
+            <p>Do you wish to create an account?</p>
+            <form action="Choice" method="POST">
+                <input type="hidden" name="Register" value="true">
+                <button type="submit" class="button-primary">Create Account</button>
+            </form>
+            <form action="Choice" method="POST">
+                <input type="hidden" name="Register" value="false">
+                <button type="submit" name="Register" value="false" class="button btn-danger">Continue as Guest</button>
+            </form>
+        </div>
+
+    </div>
+</div>
